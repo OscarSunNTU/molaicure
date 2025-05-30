@@ -1,0 +1,837 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Our Services - molAIcure</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --primary-color: #0ea5e9;
+            --secondary-color: #06b6d4;
+            --accent-color: #38bdf8;
+            --dark-bg: #0f172a;
+            --darker-bg: #020617;
+            --light-text: #e2e8f0;
+            --muted-text: #94a3b8;
+            --card-bg: rgba(30, 41, 59, 0.5);
+            --gradient-1: linear-gradient(135deg, #0ea5e9 0%, #06b6d4 100%);
+            --gradient-2: linear-gradient(135deg, #3b82f6 0%, #8b5cf6 100%);
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        /* Anchor offset for fixed navigation */
+        #omics-analysis,
+        #virtual-screening,
+        #peptide-design,
+        #molecular-dynamics,
+        #wet-lab {
+            scroll-margin-top: 100px;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background-color: var(--dark-bg);
+            color: var(--light-text);
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+
+        /* Animated Background */
+        .bg-animation {
+            position: fixed;
+            width: 100%;
+            height: 100%;
+            top: 0;
+            left: 0;
+            z-index: -1;
+            background: var(--dark-bg);
+            overflow: hidden;
+        }
+
+        .bg-animation::before {
+            content: '';
+            position: absolute;
+            width: 200%;
+            height: 200%;
+            top: -50%;
+            left: -50%;
+            background: radial-gradient(circle at 20% 50%, rgba(14, 165, 233, 0.1) 0%, transparent 50%),
+                        radial-gradient(circle at 80% 80%, rgba(139, 92, 246, 0.1) 0%, transparent 50%),
+                        radial-gradient(circle at 40% 20%, rgba(6, 182, 212, 0.1) 0%, transparent 50%);
+            animation: rotate 30s linear infinite;
+        }
+
+        @keyframes rotate {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        /* Navigation */
+        nav {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            background: rgba(15, 23, 42, 0.95);
+            backdrop-filter: blur(10px);
+            z-index: 1000;
+            padding: 1rem 0;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+        }
+
+        .nav-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-size: 1.75rem;
+            font-weight: 800;
+            background: var(--gradient-1);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            letter-spacing: -0.5px;
+            text-decoration: none;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 2.5rem;
+            list-style: none;
+        }
+
+        .nav-links a {
+            color: var(--muted-text);
+            text-decoration: none;
+            font-weight: 500;
+            transition: all 0.3s ease;
+            position: relative;
+        }
+
+        .nav-links a:hover,
+        .nav-links a.active {
+            color: var(--accent-color);
+        }
+
+        .nav-links a::after {
+            content: '';
+            position: absolute;
+            bottom: -5px;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: var(--accent-color);
+            transition: width 0.3s ease;
+        }
+
+        .nav-links a:hover::after,
+        .nav-links a.active::after {
+            width: 100%;
+        }
+
+        /* Page Header */
+        .page-header {
+            padding: 8rem 2rem 4rem;
+            text-align: center;
+            background: linear-gradient(135deg, var(--dark-bg) 0%, var(--darker-bg) 100%);
+        }
+
+        .page-header h1 {
+            font-size: 3.5rem;
+            font-weight: 900;
+            margin-bottom: 1rem;
+            background: var(--gradient-1);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .page-header p {
+            font-size: 1.25rem;
+            color: var(--muted-text);
+            max-width: 700px;
+            margin: 0 auto;
+        }
+
+        /* Service Detail Section */
+        .service-detail {
+            padding: 4rem 2rem;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .service-detail-card {
+            background: var(--card-bg);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 30px;
+            padding: 4rem;
+            margin-bottom: 3rem;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .service-detail-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 5px;
+            background: var(--gradient-1);
+        }
+
+        .service-icon-large {
+            font-size: 4rem;
+            margin-bottom: 2rem;
+            display: inline-block;
+        }
+
+        .service-detail h2 {
+            font-size: 2.5rem;
+            margin-bottom: 1.5rem;
+            color: var(--accent-color);
+        }
+
+        .service-detail h3 {
+            font-size: 1.75rem;
+            margin: 2.5rem 0 1.5rem;
+            color: var(--light-text);
+        }
+
+        .service-detail p {
+            font-size: 1.1rem;
+            line-height: 1.8;
+            margin-bottom: 1.5rem;
+            color: var(--muted-text);
+        }
+
+        /* Feature Lists */
+        .feature-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+            margin: 2rem 0;
+        }
+
+        .feature-item {
+            background: rgba(255, 255, 255, 0.05);
+            padding: 1.5rem;
+            border-radius: 15px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            transition: all 0.3s ease;
+        }
+
+        .feature-item:hover {
+            transform: translateY(-3px);
+            border-color: rgba(14, 165, 233, 0.3);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+        }
+
+        .feature-item h4 {
+            color: var(--accent-color);
+            margin-bottom: 0.75rem;
+            font-size: 1.25rem;
+        }
+
+        /* Performance Stats */
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 2rem;
+            margin: 2rem 0;
+        }
+
+        .stat-card {
+            background: var(--darker-bg);
+            border-radius: 20px;
+            padding: 2rem;
+            text-align: center;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .stat-number {
+            font-size: 3rem;
+            font-weight: 900;
+            background: var(--gradient-1);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            margin-bottom: 0.5rem;
+        }
+
+        .stat-label {
+            color: var(--muted-text);
+            font-size: 1rem;
+        }
+
+        /* Technology Stack */
+        .tech-stack {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 1rem;
+            margin: 2rem 0;
+        }
+
+        .tech-badge {
+            background: rgba(14, 165, 233, 0.2);
+            border: 1px solid rgba(14, 165, 233, 0.3);
+            padding: 0.5rem 1.25rem;
+            border-radius: 25px;
+            font-size: 0.95rem;
+            transition: all 0.3s ease;
+        }
+
+        .tech-badge:hover {
+            background: rgba(14, 165, 233, 0.3);
+            transform: translateY(-2px);
+        }
+
+        /* Quick Navigation */
+        .quick-nav {
+            margin-top: 2rem;
+            display: flex;
+            gap: 1rem;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+
+        .quick-nav a {
+            padding: 0.5rem 1.5rem;
+            background: rgba(14, 165, 233, 0.1);
+            border: 1px solid rgba(14, 165, 233, 0.3);
+            border-radius: 25px;
+            color: var(--muted-text);
+            text-decoration: none;
+            transition: all 0.3s ease;
+        }
+
+        .quick-nav a:hover,
+        .quick-nav a.active {
+            background: rgba(14, 165, 233, 0.2);
+            border-color: var(--accent-color);
+            color: var(--accent-color);
+            transform: translateY(-2px);
+        }
+
+        /* CTA Section */
+        .cta-section {
+            background: var(--darker-bg);
+            border-radius: 30px;
+            padding: 4rem;
+            text-align: center;
+            margin: 4rem auto;
+            max-width: 1200px;
+        }
+
+        .cta-section h2 {
+            font-size: 2.5rem;
+            margin-bottom: 1.5rem;
+            background: var(--gradient-1);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .cta-buttons {
+            display: flex;
+            gap: 1.5rem;
+            justify-content: center;
+            margin-top: 2rem;
+        }
+
+        .cta-button {
+            display: inline-block;
+            padding: 1rem 2.5rem;
+            background: var(--gradient-1);
+            color: white;
+            text-decoration: none;
+            border-radius: 50px;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(14, 165, 233, 0.3);
+        }
+
+        .cta-button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(14, 165, 233, 0.4);
+        }
+
+        .cta-button-secondary {
+            background: transparent;
+            border: 2px solid var(--accent-color);
+            color: var(--accent-color);
+        }
+
+        .cta-button-secondary:hover {
+            background: rgba(14, 165, 233, 0.1);
+        }
+
+        /* Back to top button */
+        .back-to-top {
+            position: fixed;
+            bottom: 2rem;
+            right: 2rem;
+            width: 50px;
+            height: 50px;
+            background: var(--gradient-1);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            text-decoration: none;
+            opacity: 0;
+            visibility: hidden;
+            transition: all 0.3s ease;
+            z-index: 999;
+            box-shadow: 0 4px 15px rgba(14, 165, 233, 0.3);
+        }
+
+        .back-to-top.visible {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        .back-to-top:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 25px rgba(14, 165, 233, 0.4);
+        }
+
+        /* Animated GIF styling */
+        img[src$=".gif"] {
+            image-rendering: optimizeQuality;
+            image-rendering: -webkit-optimize-contrast;
+            box-shadow: 0 10px 30px rgba(14, 165, 233, 0.2);
+        }
+
+        /* MD Animation Container */
+        .md-animation-container {
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .md-animation-container::before {
+            content: '';
+            position: absolute;
+            top: -2px;
+            left: -2px;
+            right: -2px;
+            bottom: -2px;
+            background: linear-gradient(45deg, var(--primary-color), var(--secondary-color), var(--accent-color));
+            border-radius: 10px;
+            opacity: 0.3;
+            z-index: -1;
+            animation: glow 3s ease-in-out infinite;
+        }
+        
+        @keyframes glow {
+            0%, 100% { opacity: 0.3; }
+            50% { opacity: 0.6; }
+        }
+
+        /* Footer */
+        footer {
+            text-align: center;
+            padding: 3rem 2rem;
+            color: var(--muted-text);
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .quick-nav {
+                gap: 0.5rem;
+            }
+            
+            .quick-nav a {
+                padding: 0.4rem 1rem;
+                font-size: 0.9rem;
+            }
+            
+            .nav-links {
+                display: none;
+            }
+            
+            .page-header h1 {
+                font-size: 2.5rem;
+            }
+            
+            .service-detail-card {
+                padding: 2rem;
+            }
+            
+            .cta-buttons {
+                flex-direction: column;
+            }
+            
+            .stats-grid {
+                grid-template-columns: 1fr 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="bg-animation"></div>
+
+    <nav>
+        <div class="nav-container">
+            <a href="index.html" class="logo">molAIcure</a>
+            <ul class="nav-links">
+                <li><a href="index.html">Home</a></li>
+                <li><a href="#omics-analysis" class="active">Services</a></li>
+                <li><a href="index.html#team">Team</a></li>
+                <li><a href="index.html#achievements">Achievements</a></li>
+                <li><a href="index.html#publications">Publications</a></li>
+                <li><a href="index.html#contact">Contact</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <section class="page-header">
+        <h1>Our Services</h1>
+        <p>Comprehensive computational solutions powered by cutting-edge AI and deep learning technologies</p>
+        
+        <!-- Quick Navigation -->
+        <div class="quick-nav">
+            <a href="#omics-analysis" class="active">🧬 Omics Analysis</a>
+            <a href="#virtual-screening">🔬 Virtual Screening</a>
+            <a href="#peptide-design">🧩 Peptide Design</a>
+            <a href="#molecular-dynamics">⚡ Molecular Dynamics</a>
+            <a href="#wet-lab">🧪 Wet-Lab Validation</a>
+        </div>
+    </section>
+
+    <!-- Omics Data Analysis -->
+    <section class="service-detail" id="omics-analysis">
+        <div class="service-detail-card">
+            <div style="display: flex; align-items: center; gap: 2rem; margin-bottom: 2rem;">
+                <span class="service-icon-large">🧬</span>
+                <img src="./figure/services/gatomics/GATomics_logo.png" alt="GATomics Logo" style="height: 80px; width: auto;">
+            </div>
+            <h2>Omics Data Analysis & Biomarker Identification</h2>
+            
+            <p>Our flagship <strong>GATomics</strong> platform revolutionizes single-cell multi-omics analysis using advanced graph neural networks. Validated across 22 disease datasets with industry-leading performance.</p>
+
+            <!-- Key Performance Stats -->
+            <div class="stats-grid">
+                <div class="stat-card">
+                    <div class="stat-number">#1</div>
+                    <div class="stat-label">Ranked in 57.9% of Benchmarks</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-number">83.6%</div>
+                    <div class="stat-label">Better than Traditional Tools</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-number">160x</div>
+                    <div class="stat-label">Faster Processing</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-number">22</div>
+                    <div class="stat-label">Validated Datasets</div>
+                </div>
+            </div>
+
+            <!-- Performance Comparison -->
+            <div style="background: var(--darker-bg); border-radius: 20px; padding: 2rem; margin: 2rem 0;">
+                <h3 style="text-align: center; margin-bottom: 1.5rem;">Proven Performance Across 19 Disease Datasets</h3>
+                <img src="./figure/services/gatomics/gatomics_comparison.png" alt="GATomics Performance Comparison" style="width: 100%; height: auto; border-radius: 10px;">
+                <p style="text-align: center; margin-top: 1rem; color: var(--muted-text);">Outperforming traditional tools like Scanpy, ANOVA, and t-test with statistically significant improvements</p>
+            </div>
+
+            <h3>What We Deliver</h3>
+            <div class="feature-grid">
+                <div class="feature-item">
+                    <h4>Cross-Stage Disease Analysis</h4>
+                    <p>Simultaneously analyze diagnosis, remission, and relapse stages to identify critical regulatory genes missed by traditional methods</p>
+                </div>
+                <div class="feature-item">
+                    <h4>Novel Biomarker Discovery</h4>
+                    <p>Uncover hidden therapeutic targets and chemoresistance mechanisms through advanced graph attention networks</p>
+                </div>
+                <div class="feature-item">
+                    <h4>Rapid Data Processing</h4>
+                    <p>Handle datasets from thousands to millions of cells with GPU-accelerated analysis</p>
+                </div>
+            </div>
+
+            <h3>Supported Data Types</h3>
+            <div class="tech-stack">
+                <span class="tech-badge">scRNA-seq</span>
+                <span class="tech-badge">scATAC-seq</span>
+                <span class="tech-badge">snRNA-seq</span>
+                <span class="tech-badge">Spatial Transcriptomics</span>
+                <span class="tech-badge">Multi-modal Integration</span>
+            </div>
+
+            <h3>Why Choose GATomics?</h3>
+            <div style="background: var(--darker-bg); border-radius: 20px; padding: 2rem; margin: 2rem 0;">
+                <ul style="color: var(--light-text); margin-left: 1.5rem; line-height: 2;">
+                    <li>✓ Proven success in AML, solid tumors, and rare diseases</li>
+                    <li>✓ Identifies therapeutic targets missed by conventional analysis</li>
+                    <li>✓ Publication-ready results with comprehensive reports</li>
+                    <li>✓ Expert consultation from our PhD-level bioinformatics team</li>
+                </ul>
+            </div>
+        </div>
+
+        <!-- Virtual Screening -->
+        <div class="service-detail-card" id="virtual-screening">
+            <span class="service-icon-large">🔬</span>
+            <h2>AI-Powered Virtual Screening</h2>
+            
+            <p>Our proprietary AI models combined with physics-based docking deliver unprecedented accuracy in hit identification. This data-driven approach enables rapid screening through ultra-large chemical libraries.</p>
+
+            <!-- Key Stats -->
+            <div class="stats-grid">
+                <div class="stat-card">
+                    <div class="stat-number">10B+</div>
+                    <div class="stat-label">Compounds Screened</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-number">88%</div>
+                    <div class="stat-label">Hit Rate Success</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-number">100x</div>
+                    <div class="stat-label">Faster than Traditional</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-number">3</div>
+                    <div class="stat-label">Target Types Supported</div>
+                </div>
+            </div>
+
+            <h3>Our Technologies</h3>
+            
+            <!-- BIND Technology -->
+            <div style="background: rgba(14, 165, 233, 0.05); border: 1px solid rgba(14, 165, 233, 0.2); border-radius: 20px; padding: 2rem; margin: 2rem 0;">
+                <h4 style="color: var(--accent-color); margin-bottom: 1rem; font-size: 1.5rem;">BIND - Protein Target Screening</h4>
+                <p style="margin-bottom: 1rem;">Our sequence-based AI model predicts binding probability between small molecules and protein targets, enabling ultra-fast screening through massive chemical libraries.</p>
+                <img src="./figure/services/bind/bind_overview.png" alt="BIND Technology Overview" style="width: 100%; height: auto; border-radius: 10px; margin-top: 1rem;">
+            </div>
+
+            <!-- RmsdXNA Technology -->
+            <div style="background: rgba(139, 92, 246, 0.05); border: 1px solid rgba(139, 92, 246, 0.2); border-radius: 20px; padding: 2rem; margin: 2rem 0;">
+                <h4 style="color: var(--accent-color); margin-bottom: 1rem; font-size: 1.5rem;">RmsdXNA - RNA/DNA Target Screening</h4>
+                <p>Machine learning model specifically designed to rescore binding poses for RNA/DNA targets, overcoming the limitations of traditional docking methods for nucleic acid targets.</p>
+            </div>
+
+            <h3>Supported Targets</h3>
+            <div class="tech-stack">
+                <span class="tech-badge">Protein Targets</span>
+                <span class="tech-badge">RNA Targets</span>
+                <span class="tech-badge">DNA Targets</span>
+                <span class="tech-badge">Protein-Protein Interfaces</span>
+                <span class="tech-badge">Allosteric Sites</span>
+            </div>
+
+            <h3>Screening Process</h3>
+            <div style="background: var(--darker-bg); border-radius: 20px; padding: 2rem; margin: 2rem 0;">
+                <img src="./figure/services/screening/screening_workflow.png" alt="Virtual Screening Workflow" style="width: 100%; height: auto; border-radius: 10px;">
+                <p style="text-align: center; margin-top: 1rem; color: var(--muted-text);">AI-driven screening combined with physics-based validation ensures high-quality hits</p>
+            </div>
+        </div>
+
+        <!-- Miniprotein / Peptide Design -->
+        <div class="service-detail-card" id="peptide-design">
+            <span class="service-icon-large">🧩</span>
+            <h2>Miniprotein & Peptide Design</h2>
+            
+            <p>Target "undruggable" proteins with our AI-powered miniprotein and peptide design platform. Our validated pipeline delivers novel biologics for challenging targets beyond the reach of small molecules.</p>
+
+            <div class="feature-grid">
+                <div class="feature-item">
+                    <h4>Expanded Target Space</h4>
+                    <p>Access protein-protein interfaces and previously undruggable targets with high-affinity binders</p>
+                </div>
+                <div class="feature-item">
+                    <h4>AI-Driven Design</h4>
+                    <p>State-of-the-art models generate novel sequences with optimized stability and specificity</p>
+                </div>
+                <div class="feature-item">
+                    <h4>Wet-Lab Validated</h4>
+                    <p>All designs undergo rigorous experimental validation to ensure real-world efficacy</p>
+                </div>
+            </div>
+
+            <h3>Design Capabilities</h3>
+            <div class="tech-stack">
+                <span class="tech-badge">Cyclic Peptides</span>
+                <span class="tech-badge">Stapled Peptides</span>
+                <span class="tech-badge">Miniproteins (30-100 aa)</span>
+                <span class="tech-badge">PPI Inhibitors</span>
+                <span class="tech-badge">Cell-Penetrating Peptides</span>
+            </div>
+        </div>
+
+        <!-- Molecular Dynamics -->
+        <div class="service-detail-card" id="molecular-dynamics">
+            <span class="service-icon-large">⚡</span>
+            <h2>Molecular Dynamics Simulations</h2>
+            
+            <p>Our expert MD team leverages state-of-the-art GROMACS simulations powered by NVIDIA H100 GPUs to validate AI-generated hits. With years of experience in complex biomolecular systems, we ensure scientific rigor and dramatically reduce false positives.</p>
+
+            <!-- MD Animation -->
+            <div style="background: var(--darker-bg); border-radius: 20px; padding: 2rem; margin: 2rem 0; text-align: center;">
+                <div class="md-animation-container" style="display: inline-block; position: relative;">
+                    <img src="./figure/services/md/md_simulation.gif" alt="Molecular Dynamics Simulation" style="width: 100%; max-width: 600px; height: auto; border-radius: 10px;">
+                </div>
+                <p style="margin-top: 1rem; color: var(--muted-text);">Real-time visualization of protein-ligand dynamics from our GROMACS simulations</p>
+            </div>
+
+            <h3>Our MD Expertise</h3>
+            <div class="feature-grid">
+                <div class="feature-item">
+                    <h4>Advanced GROMACS Workflows</h4>
+                    <p>Optimized protocols for various biomolecular systems with enhanced sampling techniques</p>
+                </div>
+                <div class="feature-item">
+                    <h4>GPU-Accelerated Computing</h4>
+                    <p>NVIDIA H100 infrastructure enables microsecond-scale simulations in hours, not weeks</p>
+                </div>
+                <div class="feature-item">
+                    <h4>Comprehensive Analysis</h4>
+                    <p>From RMSD/RMSF to MM-PBSA free energy calculations and interaction fingerprinting</p>
+                </div>
+            </div>
+
+            <h3>Technical Capabilities</h3>
+            <div class="tech-stack">
+                <span class="tech-badge">GROMACS 2024</span>
+                <span class="tech-badge">NVIDIA H100 GPUs</span>
+                <span class="tech-badge">Enhanced Sampling</span>
+                <span class="tech-badge">Free Energy Perturbation</span>
+                <span class="tech-badge">Metadynamics</span>
+                <span class="tech-badge">Umbrella Sampling</span>
+            </div>
+
+            <h3>Why Choose Our MD Services?</h3>
+            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 2rem; margin: 2rem 0;">
+                <div style="background: rgba(14, 165, 233, 0.05); border: 1px solid rgba(14, 165, 233, 0.2); border-radius: 20px; padding: 2rem;">
+                    <h4 style="color: var(--accent-color); margin-bottom: 1rem;">Experience & Infrastructure</h4>
+                    <ul style="color: var(--muted-text); margin-left: 1.5rem;">
+                        <li>10+ years collective MD experience</li>
+                        <li>1000+ successful simulations completed</li>
+                        <li>Latest NVIDIA H100 GPU cluster</li>
+                        <li>Microsecond simulations in hours</li>
+                    </ul>
+                </div>
+                <div style="background: rgba(139, 92, 246, 0.05); border: 1px solid rgba(139, 92, 246, 0.2); border-radius: 20px; padding: 2rem;">
+                    <h4 style="color: var(--accent-color); margin-bottom: 1rem;">Deliverables</h4>
+                    <ul style="color: var(--muted-text); margin-left: 1.5rem;">
+                        <li>Detailed trajectory analysis</li>
+                        <li>Binding free energy profiles</li>
+                        <li>Key interaction identification</li>
+                        <li>Publication-ready visualizations</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <!-- Wet Lab Validation -->
+        <div class="service-detail-card" id="wet-lab">
+            <span class="service-icon-large">🧪</span>
+            <h2>Wet-Lab Hit Validation</h2>
+            
+            <p>Complete the discovery cycle with our comprehensive experimental validation services. From initial assays to advanced characterization, we confirm computational predictions with real-world data.</p>
+
+            <div class="feature-grid">
+                <div class="feature-item">
+                    <h4>Cell-Based Assays</h4>
+                    <p>Viability, proliferation, and phenotypic screening in relevant disease models</p>
+                </div>
+                <div class="feature-item">
+                    <h4>Biochemical Validation</h4>
+                    <p>Binding kinetics, enzymatic assays, and target engagement studies</p>
+                </div>
+                <div class="feature-item">
+                    <h4>Advanced Characterization</h4>
+                    <p>Flow cytometry, microscopy, and mechanism of action studies</p>
+                </div>
+            </div>
+
+            <h3>Validation Services</h3>
+            <div class="tech-stack">
+                <span class="tech-badge">IC50/EC50 Determination</span>
+                <span class="tech-badge">SPR/BLI Binding</span>
+                <span class="tech-badge">NanoBRET Assays</span>
+                <span class="tech-badge">CETSA</span>
+                <span class="tech-badge">Multi-parameter Flow</span>
+            </div>
+        </div>
+    </section>
+
+    <!-- Call to Action -->
+    <section class="cta-section">
+        <h2>Ready to Accelerate Your Drug Discovery?</h2>
+        <p style="font-size: 1.25rem; color: var(--muted-text); margin-bottom: 2rem;">
+            Join leading pharmaceutical companies and research institutions using our AI-powered platform
+        </p>
+        <div class="cta-buttons">
+            <a href="index.html#contact" class="cta-button">Start Your Project</a>
+            <a href="index.html#achievements" class="cta-button cta-button-secondary">View Case Studies</a>
+        </div>
+    </section>
+
+    <footer>
+        <p>&copy; 2025 molAIcure. Accelerating therapeutic discovery through AI.</p>
+    </footer>
+
+    <!-- Back to top button -->
+    <a href="#" class="back-to-top">↑</a>
+
+    <!-- 
+    Required images for this page:
+    1. ./figure/services/gatomics/GATomics_logo.png - GATomics logo
+    2. ./figure/services/gatomics/gatomics_comparison.png - Performance comparison across 19 datasets
+    3. ./figure/services/bind/bind_overview.png - BIND technology overview diagram
+    4. ./figure/services/screening/screening_workflow.png - Virtual screening workflow diagram
+    5. ./figure/services/md/md_simulation.gif - Molecular dynamics simulation animation (looping GIF)
+    -->
+
+    <script>
+        // Update active quick nav based on scroll position
+        window.addEventListener('scroll', function() {
+            const sections = ['omics-analysis', 'virtual-screening', 'peptide-design', 'molecular-dynamics', 'wet-lab'];
+            const navLinks = document.querySelectorAll('.quick-nav a');
+            const backToTop = document.querySelector('.back-to-top');
+            
+            // Show/hide back to top button
+            if (window.scrollY > 300) {
+                backToTop.classList.add('visible');
+            } else {
+                backToTop.classList.remove('visible');
+            }
+            
+            let current = '';
+            sections.forEach(section => {
+                const element = document.getElementById(section);
+                if (element) {
+                    const rect = element.getBoundingClientRect();
+                    if (rect.top <= 150 && rect.bottom >= 150) {
+                        current = section;
+                    }
+                }
+            });
+            
+            navLinks.forEach(link => {
+                link.classList.remove('active');
+                if (link.getAttribute('href') === '#' + current) {
+                    link.classList.add('active');
+                }
+            });
+        });
+    </script>
+</body>
+</html>
